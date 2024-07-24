@@ -42,6 +42,16 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         path: backend
 
+    - name: Verify backend repository
+      run: ls -R backend
+      
+    - name: List files and directories
+      run: |
+        cd backend
+        echo "Current directory: $(pwd)"
+        echo "Files and directories:"
+        ls -al
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
