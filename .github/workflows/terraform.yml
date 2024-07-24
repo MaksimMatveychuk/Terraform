@@ -45,7 +45,6 @@ jobs:
       
     - name: List files and directories
       run: |
-        cd backend
         echo "Current directory: $(pwd)"
         echo "Files and directories:"
         ls -al
