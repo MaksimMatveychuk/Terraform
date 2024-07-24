@@ -26,19 +26,23 @@ jobs:
 
     steps:
     - name: Configure aws credentials
-      uses: aws-actions/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+
+    - name: Checkout backend repository
+      uses: actions/checkout@v4
+      with:
+        repository: NewEnergyCode/techtask
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.4.6
+      uses: hashicorp/setup-terraform@v3
 
     - name: Terraform Init
       run: terraform init
@@ -49,6 +53,5 @@ jobs:
     - name: Terraform Plan
       run: terraform plan -input=false
 
-      # On push to "main", deploy the Terraform infrastructure
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false
