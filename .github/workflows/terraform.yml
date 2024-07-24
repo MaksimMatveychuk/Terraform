@@ -18,11 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      working-directory: aws/backTestDeploy
+      working-directory: devrateTestDeploy
     defaults:
       run:
         shell: bash
-        working-directory: ${{ env.aws/backTestDeploy }}
+        working-directory: ${{ env.working-directory }}
 
     steps:
     - name: Configure aws credentials
