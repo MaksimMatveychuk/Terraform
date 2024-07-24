@@ -40,11 +40,12 @@ jobs:
       with:
         repository: MaksimMatveychuk/techtask
         token: ${{ secrets.GITHUB_TOKEN }}
-        path: backend
+        path: backTestDeploy/backend
 
       
     - name: List files and directories
       run: |
+        cd backTestDeploy/backend
         echo "Current directory: $(pwd)"
         echo "Files and directories:"
         ls -al
