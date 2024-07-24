@@ -5,17 +5,17 @@ resource "aws_security_group" "DevrateSG" {
   dynamic "ingress" {
     for_each = ["22", "80", "3000", "8080"]
     content {
-      protocol  = "tcp"
-      from_port = ingress.value
-      to_port   = ingress.value
+      protocol    = "tcp"
+      from_port   = ingress.value
+      to_port     = ingress.value
       cidr_blocks = ["0.0.0.0/0"]
     }
   }
 
   egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }

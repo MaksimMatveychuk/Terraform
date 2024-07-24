@@ -1,14 +1,14 @@
 resource "aws_ecs_cluster" "cluster_back" {
-  name = "cluster_back"
+  name       = "cluster_back"
   depends_on = [aws_ecs_task_definition.tertesttd]
 }
 
 resource "aws_launch_template" "ecs_launch" {
-  name_prefix   = "ecs-launch"
-  image_id      = "ami-0137818fbf28e2d05"
-  instance_type = "t3.micro"
+  name_prefix            = "ecs-launch"
+  image_id               = "ami-0137818fbf28e2d05"
+  instance_type          = "t3.micro"
   vpc_security_group_ids = [aws_security_group.DevrateSG.id]
-  key_name      = aws_key_pair.tf_key.key_name
+  key_name               = aws_key_pair.tf_key.key_name
   user_data = base64encode(<<-EOF
       #!/bin/bash
       echo ECS_CLUSTER=${aws_ecs_cluster.cluster_back.name} >> /etc/ecs/ecs.config;
@@ -53,7 +53,7 @@ resource "aws_ecs_capacity_provider" "provider" {
 }
 
 resource "aws_ecs_cluster_capacity_providers" "main" {
-  cluster_name = aws_ecs_cluster.cluster_back.name
+  cluster_name       = aws_ecs_cluster.cluster_back.name
   capacity_providers = [aws_ecs_capacity_provider.provider.name]
 
   default_capacity_provider_strategy {
@@ -80,7 +80,7 @@ resource "aws_autoscaling_group" "ecs_asg" {
     aws_default_subnet.default_az3.id
   ]
   termination_policies = ["OldestInstance"]
-  force_delete = true
+  force_delete         = true
   dynamic "tag" {
     for_each = {
       Name   = "EcsInstance-ASG"
