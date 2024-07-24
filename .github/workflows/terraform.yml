@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      working-directory: devrateTestDeploy
+      working-directory: backTestDeploy
     defaults:
       run:
         shell: bash
