@@ -38,7 +38,7 @@ jobs:
     - name: Checkout backend repository
       uses: actions/checkout@v4
       with:
-        repository: NewEnergyCode/techtask
+        repository: MaksimMatveychuk/techtask
         token: ${{ secrets.GITHUB_TOKEN }}
         path: backend
 
