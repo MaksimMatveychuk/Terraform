@@ -17,9 +17,12 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
+    env:
+      working-directory: aws/backTestDeploy
     defaults:
       run:
         shell: bash
+        working-directory: ${{ env.aws/backTestDeploy }}
 
     steps:
     - name: Configure aws credentials
