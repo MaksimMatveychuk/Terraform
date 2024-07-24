@@ -40,6 +40,7 @@ jobs:
       with:
         repository: NewEnergyCode/techtask
         token: ${{ secrets.GITHUB_TOKEN }}
+        path: backend
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
