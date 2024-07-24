@@ -22,7 +22,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ${{ env.working-directory }}
 
     steps:
     - name: Configure aws credentials
@@ -31,21 +30,21 @@ jobs:
         aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
-
+        working-directory: ${{ env.working-directory }}
     - name: Checkout
       uses: actions/checkout@v4
-
+      with:
+        working-directory: ${{ env.working-directory }}
     - name: Checkout backend repository
       uses: actions/checkout@v4
       with:
         repository: MaksimMatveychuk/techtask
         token: ${{ secrets.GITHUB_TOKEN }}
-        path: backTestDeploy/backend
+        path: backend
 
       
     - name: List files and directories
       run: |
-        cd backTestDeploy/backend
         echo "Current directory: $(pwd)"
         echo "Files and directories:"
         ls -al
