@@ -41,7 +41,13 @@ jobs:
         repository: NewEnergyCode/techtask
         token: ${{ secrets.GITHUB_TOKEN }}
         path: backend
-
+        
+    - name: List files and directories
+      run: |
+        echo "Current directory: $(pwd)"
+        echo "Files and directories:"
+        ls -al
+        
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
