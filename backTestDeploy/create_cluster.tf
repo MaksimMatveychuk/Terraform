@@ -5,8 +5,8 @@ resource "aws_ecs_cluster" "cluster_back" {
 
 resource "aws_launch_template" "ecs_launch" {
   name_prefix            = "ecs-launch"
-  image_id               = "ami-0137818fbf28e2d05"
-  instance_type          = "t3.micro"
+  image_id               = data.aws_ami.aws_linux_latest_ecs.image_id
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.DevrateSG.id]
   key_name               = aws_key_pair.tf_key.key_name
   user_data = base64encode(<<-EOF
@@ -31,6 +31,7 @@ resource "aws_launch_template" "ecs_launch" {
       volume_type = "gp2"
     }
   }
+  depends_on = [aws_ecr_repository.Create-ECR]
 }
 
 resource "aws_ecs_capacity_provider" "provider" {
@@ -67,20 +68,19 @@ resource "aws_autoscaling_group" "ecs_asg" {
   name = "ASGn-${aws_launch_template.ecs_launch.name_prefix}"
   launch_template {
     id      = aws_launch_template.ecs_launch.id
-    version = "$Latest"
+    version = aws_launch_template.ecs_launch.latest_version
   }
   min_size                  = 1
-  max_size                  = 5
+  max_size                  = 2
   desired_capacity          = 1
   health_check_type         = "EC2"
-  health_check_grace_period = 30
+  health_check_grace_period = 10
   vpc_zone_identifier = [
     aws_default_subnet.default_az1.id,
     aws_default_subnet.default_az2.id,
     aws_default_subnet.default_az3.id
   ]
   termination_policies = ["OldestInstance"]
-  force_delete         = true
   dynamic "tag" {
     for_each = {
       Name   = "EcsInstance-ASG"
@@ -93,17 +93,19 @@ resource "aws_autoscaling_group" "ecs_asg" {
       propagate_at_launch = true
     }
   }
+  lifecycle {
+    create_before_destroy = true
+  }
   protect_from_scale_in = true
 }
 
 resource "aws_ecs_service" "back_services" {
-  name                 = "gft-test-first-services"
+  name                 = "gft-test-first-services-${aws_ecs_task_definition.tertesttd.revision}"
   cluster              = aws_ecs_cluster.cluster_back.id
   task_definition      = aws_ecs_task_definition.tertesttd.arn
   scheduling_strategy  = "REPLICA"
   desired_count        = 1
   force_new_deployment = true
-
   capacity_provider_strategy {
     capacity_provider = aws_ecs_capacity_provider.provider.name
     base              = 1
@@ -114,8 +116,8 @@ resource "aws_ecs_service" "back_services" {
     type  = "spread"
     field = "attribute:ecs.availability-zone"
   }
-
-  depends_on = [
-    aws_ecs_task_definition.tertesttd
-  ]
+  lifecycle {
+    create_before_destroy = true
+  }
+  depends_on = [aws_autoscaling_group.ecs_asg]
 }

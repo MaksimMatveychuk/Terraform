@@ -5,15 +5,15 @@ resource "aws_ecs_task_definition" "tertesttd" {
   container_definitions = jsonencode([
     {
       name              = "container",
-      image             = "${data.aws_caller_identity.current.account_id}.dkr.ecr.eu-north-1.amazonaws.com/backrepository:latest",
+      image             = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com/backrepository:latest",
       cpu               = 0,
       memory            = 819,
       memoryReservation = 819,
       portMappings = [
         {
           name          = "continer-8080-tcp",
-          containerPort = 8080,
-          hostPort      = 8080,
+          containerPort = var.port,
+          hostPort      = var.port,
           protocol      = "tcp",
           appProtocol   = "http"
         }
@@ -56,7 +56,7 @@ resource "aws_ecs_task_definition" "tertesttd" {
         options = {
           awslogs-group         = "/ecs/td-test",
           awslogs-create-group  = "true",
-          awslogs-region        = "eu-north-1",
+          awslogs-region        = var.region,
           awslogs-stream-prefix = "ecs"
         },
         secretOptions = []
@@ -79,5 +79,5 @@ resource "aws_ecs_task_definition" "tertesttd" {
     cpu_architecture        = "X86_64"
   }
 
-  depends_on = [null_resource.docker_packaging]
+  depends_on = [null_resource.docker_image]
 }
