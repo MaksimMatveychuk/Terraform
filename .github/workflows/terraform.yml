@@ -42,11 +42,11 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         path: backend
         
-    - name: List files and directories
+    - name: List all files and directories recursively
       run: |
         echo "Current directory: $(pwd)"
-        echo "Files and directories:"
-        ls -al
+        echo "All files and directories:"
+        ls -R
         
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
@@ -59,6 +59,3 @@ jobs:
 
     - name: Terraform Plan
       run: terraform plan -input=false
-
-    - name: Terraform destroy
-      run: terraform destroy -auto-approve -input=false
