@@ -71,7 +71,8 @@ jobs:
       - name: Build the Java project
         run: |
           cd backend
-          ./mvnw clean package  
+          ./mvnw clean package
+        working-directory: /home/runner/work/Terraform/Terraform/backend
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-publish
