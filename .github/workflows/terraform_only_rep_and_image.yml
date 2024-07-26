@@ -68,18 +68,13 @@ jobs:
       - name: Terraform apply
         run: terraform apply -auto-approve -input=false
 
-      - name: Build the Java project
-        run: |
-          cd backend
-          ./mvnw clean package
-        working-directory: /home/runner/work/Terraform/Terraform/backend
-
       - name: Build, tag, and push image to Amazon ECR
         id: build-publish
         shell: bash
         run: |
           aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 854387337926.dkr.ecr.eu-north-1.amazonaws.com
           cd /home/runner/work/Terraform/Terraform/backend
+          ./mvnw clean package
           docker build -t tf_example_repo .
           docker tag tf_example_repo:latest 854387337926.dkr.ecr.eu-north-1.amazonaws.com/tf_example_repo:latest
           docker push 854387337926.dkr.ecr.eu-north-1.amazonaws.com/tf_example_repo:latest
