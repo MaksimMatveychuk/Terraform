@@ -74,6 +74,7 @@ jobs:
         run: |
           aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 854387337926.dkr.ecr.eu-north-1.amazonaws.com
           cd /home/runner/work/Terraform/Terraform/backend
+          chmod +x ./mvnw
           ./mvnw clean package
           docker build -t tf_example_repo .
           docker tag tf_example_repo:latest 854387337926.dkr.ecr.eu-north-1.amazonaws.com/tf_example_repo:latest
