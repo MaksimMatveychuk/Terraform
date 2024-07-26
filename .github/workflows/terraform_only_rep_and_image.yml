@@ -68,6 +68,11 @@ jobs:
       - name: Terraform apply
         run: terraform apply -auto-approve -input=false
 
+      - name: Build the Java project
+        run: |
+          cd backend
+          ./mvnw clean package  
+
       - name: Build, tag, and push image to Amazon ECR
         id: build-publish
         shell: bash
