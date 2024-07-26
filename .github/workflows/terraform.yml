@@ -52,7 +52,13 @@ jobs:
         echo "Repository root directory: /home/runner/work/Terraform/Terraform"
         echo "All files and directories in repository root:"
         ls -R /home/runner/work/Terraform/Terraform   
-        
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
