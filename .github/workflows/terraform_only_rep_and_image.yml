@@ -68,6 +68,12 @@ jobs:
       - name: Terraform apply
         run: terraform apply -auto-approve -input=false
 
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
       - name: Build, tag, and push image to Amazon ECR
         id: build-publish
         shell: bash
