@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "Create-ECR" {
-  name                 = var.back_rep_name
+  name                 = var.back_repository_name
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
@@ -10,7 +10,7 @@ resource "aws_ecr_repository" "Create-ECR" {
 }
 
 resource "aws_ecr_lifecycle_policy" "default_policy" {
-  repository = var.back_rep_name
+  repository = var.back_repository_name
 
   policy = <<EOF
 	{

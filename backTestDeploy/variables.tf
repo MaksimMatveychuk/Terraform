@@ -3,25 +3,34 @@ variable "untagged_images" {
 }
 
 variable "region" {
-  default = "eu-north-1"
+  description = "AWS region to host your infrastructure"
+  default     = "eu-north-1"
 }
 
 variable "instance_type" {
-  default = "t3.micro"
+  description = "AWS instance type"
+  default     = "t3.micro"
 }
 
-variable "back_rep_name" {
-  default = "backrepository"
+variable "back_repository_name" {
+  description = "Repository name"
+  default     = "backrepository"
 }
 
 variable "list_of_ports" {
-  default = ["22", "80", "3000", "8080"]
+  description = "The list of ports the app will use for each other"
+  default     = ["22", "80", "3000", "8080"]
 }
 
 variable "cidr_blocks" {
-  default = ["0.0.0.0/0"]
+  description = "The list of cidrs to use for each other"
+  default     = ["0.0.0.0/0"]
 }
 
 variable "port" {
-  default = 8080
+  description = "Port on which service is listening"
+  default     = 8080
+}
+variable "work_directory" {
+  default = "/home/runner/work/Terraform/Terraform/backend"
 }
