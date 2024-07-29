@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket  = "test-bucket-02-new"
+    bucket  = "test-bucket-01-new"
     encrypt = true
     key     = "AWS/Terraform-states/terraform.tfstate"
     region  = "eu-north-1"
