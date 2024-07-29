@@ -15,3 +15,11 @@ data "aws_ami" "aws_linux_latest_ecs" {
 output "ami_id" {
   value = data.aws_ami.aws_linux_latest_ecs.image_id
 }
+data "aws_ecr_repository" "ecr_repo" {
+  name = var.back_repository_name
+}
+
+data "aws_ecr_image" "latest" {
+  repository_name = data.aws_ecr_repository.ecr_repo.name
+  most_recent     = true
+}
