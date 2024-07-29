@@ -96,7 +96,6 @@ resource "aws_autoscaling_group" "ecs_asg" {
   lifecycle {
     create_before_destroy = true
   }
-  protect_from_scale_in = true
 }
 
 resource "aws_ecs_service" "back_services" {
