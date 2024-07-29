@@ -10,8 +10,8 @@ resource "null_resource" "docker_image" {
     chmod +x ./mvnw && \
     ./mvnw clean package && \
     docker build -t ${var.back_repository_name} . && \
-    docker tag ${var.back_repository_name}:latest ${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.back_repository_name}:latest && \
-    docker push ${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.back_repository_name}:latest
+    docker tag ${var.back_repository_name}:${aws_ecs_task_definition.tertesttd.revision} ${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.back_repository_name}:${aws_ecs_task_definition.tertesttd.revision} && \
+    docker push ${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.back_repository_name}:${aws_ecs_task_definition.tertesttd.revision}
     EOF
   }
 
