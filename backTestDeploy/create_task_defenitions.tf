@@ -28,10 +28,10 @@ resource "aws_ecs_task_definition" "tertesttd" {
           name  = "PG_USERNAME",
           value = "postgres"
         },
-        {
-          name  = "PG_HOST",
-          value = aws_db_instance.postgres.address
-        },
+#         {
+#           name  = "PG_HOST",
+#           value = aws_db_instance.postgres.address
+#         },
         {
           name  = "PG_PASSWORD",
           value = "postgres"
