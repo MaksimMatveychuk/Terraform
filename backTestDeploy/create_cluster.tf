@@ -119,5 +119,5 @@ resource "aws_ecs_service" "back_services" {
   lifecycle {
     create_before_destroy = true
   }
-  depends_on = [aws_autoscaling_group.ecs_asg]
+  depends_on = [aws_autoscaling_group.ecs_asg, aws_ecs_cluster.cluster_back]
 }
