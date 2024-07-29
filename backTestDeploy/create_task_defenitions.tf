@@ -5,7 +5,7 @@ resource "aws_ecs_task_definition" "tertesttd" {
   container_definitions = jsonencode([
     {
       name              = "container",
-      image             = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com/backrepository:latest1",
+      image             = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com/backrepository:latest",
       cpu               = 0,
       memory            = 819,
       memoryReservation = 819,
