@@ -38,6 +38,7 @@ jobs:
 
       - name: Test with Maven
         run: mvn clean install
+        working-directory: /home/runner/work/Terraform/Terraform/backend
 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
