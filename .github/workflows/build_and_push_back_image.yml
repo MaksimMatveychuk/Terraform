@@ -22,6 +22,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout backend repository
+        uses: actions/checkout@v4
+        with:
+          repository: NewEnergyCode/techtask
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: backend
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -42,13 +49,6 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Checkout backend repository
-        uses: actions/checkout@v4
-        with:
-          repository: NewEnergyCode/techtask
-          token: ${{ secrets.GITHUB_TOKEN }}
-          path: backend
 
       - name: List all files and directories recursively
         run: |
