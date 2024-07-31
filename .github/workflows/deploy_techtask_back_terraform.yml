@@ -4,7 +4,7 @@ env:
   AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
   AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
   AWS_REGION: "${{ secrets.AWS_REGION }}"
-
+  IMAGE_TAG: ${{ github.sha }}
 on:
   workflow_dispatch:
 
@@ -35,12 +35,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: List all files and directories recursively
-      run: |
-        echo "Current directory: $(pwd)"
-        echo "All files and directories:"
-        ls -R
-    - name: List all files 
+    - name: List all files
       run: |
         echo "Repository root directory: /home/runner/work/Terraform/Terraform"
         echo "All files and directories in repository root:"
@@ -59,4 +54,4 @@ jobs:
       run: terraform plan -input=false
       
     - name: Terraform apply
-      run: terraform apply -var="image_tag=f3a0bbdbb3189b4cd9fd030843996293ea5cb95d" -auto-approve -input=false
+      run: terraform apply -var="image_tag=${{ env.IMAGE_TAG }}" -auto-approve -input=false
