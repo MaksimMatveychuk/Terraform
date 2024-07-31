@@ -22,31 +22,31 @@ resource "aws_ecs_task_definition" "devrate_back_td" {
       environment = [
         {
           name  = "POSTGRES_USER",
-          value = "devrate"
+          value = "techtaskDB"
         },
         {
           name  = "PG_USERNAME",
-          value = "devrate"
+          value = "techtaskDB"
         },
         #         {
         #           name  = "PG_HOST",
-        #           value = aws_db_instance.pg_db_devrate.address
+        #           value =
         #         },
         {
           name  = "PG_PASSWORD",
-          value = "devratedb"
+          value = "techtaskDB"
         },
         {
           name  = "PG_DATABASE",
-          value = "devrate"
+          value = "techtaskDB"
         },
         {
           name  = "POSTGRES_PASSWORD",
-          value = "devratedb"
+          value = "techtaskDB"
         },
         {
           name  = "POSTGRES_DB",
-          value = "devrate"
+          value = "techtaskDB"
         }
       ],
       mountPoints = [],
