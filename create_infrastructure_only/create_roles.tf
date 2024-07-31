@@ -72,7 +72,7 @@ resource "aws_iam_instance_profile" "instance_profile_tt" {
 }
 data "aws_iam_instance_profile" "aws_iam_instance_profile_tt" {
   depends_on = [aws_iam_instance_profile.instance_profile_tt]
-  name = "new-ecs-instance-profile-tt"
+  name       = "new-ecs-instance-profile-tt"
 }
 output "instance_profile" {
   value = data.aws_iam_instance_profile.aws_iam_instance_profile_tt.arn
