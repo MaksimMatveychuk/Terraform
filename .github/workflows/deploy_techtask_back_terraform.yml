@@ -4,7 +4,7 @@ env:
   AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
   AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
   AWS_REGION: "${{ secrets.AWS_REGION }}"
-  IMAGE_TAG: ${{ github.sha }}
+  IMAGE_TAG: "f3a0bbdbb3189b4cd9fd030843996293ea5cb95d"
 on:
   workflow_dispatch:
 
