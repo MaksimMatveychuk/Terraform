@@ -19,7 +19,7 @@ data "aws_iam_instance_profile" "aws_iam_instance_profile_tt" {
 
 data "aws_subnets" "example" {
   filter {
-    name = "vpc-id"
+    name   = "vpc-id"
     values = ["vpc-08ddf05f59956b856"]
   }
 
@@ -42,9 +42,9 @@ data "aws_iam_role" "ecs_instance_role" {
 
 data "aws_ami" "aws_linux_latest_ecs" {
   most_recent = true
-  owners = ["amazon"]
+  owners      = ["amazon"]
   filter {
-    name = "name"
+    name   = "name"
     values = ["amzn2-ami-ecs-kernel-5.10-hvm-2.0.20240712-x86_64-ebs"]
   }
 }
@@ -60,7 +60,7 @@ data "aws_instances" "filtered_instances" {
 }
 
 data "aws_instance" "filtered_instance_details" {
-  for_each = toset(data.aws_instances.filtered_instances.ids)
+  for_each    = toset(data.aws_instances.filtered_instances.ids)
   instance_id = each.value
 }
 
