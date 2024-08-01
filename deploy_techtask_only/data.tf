@@ -19,7 +19,7 @@ data "aws_iam_instance_profile" "aws_iam_instance_profile_tt" {
 
 data "aws_subnets" "example" {
   filter {
-    name   = "vpc-id"
+    name = "vpc-id"
     values = ["vpc-08ddf05f59956b856"]
   }
 
@@ -42,13 +42,29 @@ data "aws_iam_role" "ecs_instance_role" {
 
 data "aws_ami" "aws_linux_latest_ecs" {
   most_recent = true
-  owners      = ["amazon"]
+  owners = ["amazon"]
   filter {
-    name   = "name"
+    name = "name"
     values = ["amzn2-ami-ecs-kernel-5.10-hvm-2.0.20240712-x86_64-ebs"]
   }
 }
 
 output "ami_id" {
   value = data.aws_ami.aws_linux_latest_ecs.image_id
+}
+data "aws_instances" "filtered_instances" {
+  filter {
+    name   = "tag:Name"
+    values = ["Ecs-Back-Instance-ASG"]
+  }
+}
+
+data "aws_instance" "filtered_instance_details" {
+  for_each = toset(data.aws_instances.filtered_instances.ids)
+  instance_id = each.value
+}
+
+output "ecs_instance_public_ips" {
+  description = "Public IP addresses of the filtered instances"
+  value       = [for instance in data.aws_instance.filtered_instance_details : instance.public_ip]
 }
